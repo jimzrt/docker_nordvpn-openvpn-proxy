@@ -1,0 +1,26 @@
+version: '3'
+services:
+  vpn_proxy:
+    image: jamestop/nordvpn-openvpn-proxy:latest
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+    dns:
+      - 209.222.18.218
+      - 209.222.18.222
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - REGION=us1194
+      - USERNAME=<nordvpn-USERNAME>
+      - PASSWORD=<nordvpn-PASSWORD>
+      - LOCAL_NETWORK=10.1.1.0/24
+    networks:
+      - vpn_proxy
+    ports:
+      - 8118:8118
+    restart: always
+
+networks:
+  vpn_proxy:
